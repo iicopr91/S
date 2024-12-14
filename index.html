@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="assets/images/panda_trans_big.png">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <!-- google font -->
+    <link href="https://fonts.googleapis.com/css2?family=Chewy&display=swap" rel="stylesheet">
+
+    <!--font awesome-->
+    <script src="https://use.fontawesome.com/b169762f77.js"></script>
+
+    <!-- my css  -->
+    <link rel="stylesheet" href="assets/styles/main.css" />
+
+    <title> Password Generator</title>
+</head>
+
+<body>
+    <!-- navbar -->
+    <nav class="navbar navbar-light" style="background-color: #c6c8f0;">
+        <a class="navbar-brand" href="#">
+        </a>
+
+    </nav>
+    <!-- navbar ends -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header text-center">                   
+   Password Generator إنشاء كلمة مرور قوية باستخدام <span
+                            style="font-size: 26; font-family: 'chewy', cursive;">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-text text-center">
+                            <div>استخدم شريط الخيارات أدناه لأختيار رمز عشوائي</div>
+                            <small>انقر على زر التحديث لتوليد كلمة مرور جديدة باستخدام الخيارات المراد تحديدها.</small>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <form>
+                    <!-- pwdBackGround is the background div of passwordText. 
+                        The password background will turn green or red depending on number of chosen password length -->
+                    <div class="form-row" id="pwdBackground">
+                        <div class="form-group col-lg-10">
+                            <!-- password textarea is kept readonly using 'readonly attribute' -->
+                            <textarea class="form-control" rows="3" id="password" readonly></textarea>
+                        </div>
+                        <div class="form-group">
+                            <!-- regenate button is used to regenerate password using already selected criteria -->
+                            <button type="button" class="btn btn-md btn-outline-light" id="regenerate"><i class="fa fa-refresh"
+                                aria-hidden="true"></i></button>
+                        </div>
+                        <div class="form-group">
+                            <!-- copybtn copies the password to clipboard -->
+                            <button type="button" class="btn btn-md btn-outline-light" id="copybtn"><i class="fa fa-clipboard"
+                                    aria-hidden="true"></i></button>
+                        </div>
+                        <!-- هذه مجموعة تهدف الى إبلاغ المستخدم ما إذا كانت كلمة المرور ضعيفة أم قوية.
+                            ضعف أو قوة كلمة المرور يتم تحديده بناءً على الطول..
+                         -->
+                        <div class="form-group col-sm-12">
+                            <div class="text-center" style="background-color: #d2def7;opacity: 0.7;">
+                                <span id="strengthSymbol"> <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                                </span>
+                                <span id="strengthText"> ضعيف </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-lg-12">
+                            <!-- password length using range control -->
+                            <label for="pwdLengthRange">Select Password Length (8-128 characters)</label>
+                            <div class="range-wrap" style="width: 75%;">
+                                <input type="range" class="form-control-range range" id="pwdLengthRange" min="0" max="128"
+                                    value="8">
+                                <!-- the password length bubble is a div which visually shows length of range -->
+                                <div id="pwdLength" class="bubble">8</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-lg-12">
+                            <div class="form-check">
+                                <!-- Allow repeating characters checkbox -->
+                                <input class="form-check-input" type="checkbox" id="repeatingchars" checked="true">
+                                <label class="form-check-label" for="gridCheck">
+                                    السماح بتكرار الأحرف.
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-2">
+                            <div class="form-check">
+                                <!-- Checkbox to allow lower case letters in password -->
+                                <input class="form-check-input" type="checkbox" id="letters" checked="true">
+                                <label class="form-check-label" for="gridCheck">
+                                    أحرف (صغيرة).
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <div class="form-check">
+                                <!-- Checkbox to allow both lower and upper case letters in password -->
+                                <input class="form-check-input" type="checkbox" id="mixedcase" checked="true">
+                                <label class="form-check-label" for="gridCheck">
+                                    (أحرف صغيرة + أحرف كبيرة).
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <div class="form-check">
+                                <!-- Checkbox to allow special case characters in password -->
+                                <input class="form-check-input" type="checkbox" id="punctuations" checked="true">
+                                <label class="form-check-label" for="gridCheck">
+                                    رموز
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <div class="form-check">
+                                <!-- Checkbox to allow numbers in password -->
+                                <input class="form-check-input" type="checkbox" id="numbers" checked="true">
+                                <label class="form-check-label" for="gridCheck">
+                                    أرقام
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--container end-->
+    <div style="height: 40px;"></div>
+    <footer id="ppfooter" class="fixed-bottom" style="background-color: #c6c8f0;">
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+    <!-- main logic script -->
+    <script src="assets/script/script.js"></script>
+</body>
+
+</html>
